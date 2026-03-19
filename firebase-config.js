@@ -1,7 +1,7 @@
 export const firebaseConfig = {
   apiKey: "AIzaSyCHORjZWDycsgWVA8RU7t4f83tPiCOM7LI",
   authDomain: "cronograma-stockcar.firebaseapp.com",
-  databaseURL: "COLE_AQUI_A_DATABASE_URL",
+  databaseURL: "https://cronograma-stockcar-default-rtdb.firebaseio.com/",
   projectId: "cronograma-stockcar",
   storageBucket: "cronograma-stockcar.firebasestorage.app",
   messagingSenderId: "419811991881",
