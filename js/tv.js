@@ -35,7 +35,8 @@ function render(){
     </div>
   </div>`;
 
-  html += `<div class="tvBoard" style="margin-top:14px">`;
+  html += `<div class="tvLayout">`;
+  html += `<div class="tvColumns">`;
 
   for(const unit of state.units){
     const visibleTasks = sortByDate(state.tasks.filter(t=>t.unitId===unit.id && t.status!=='concluida'),'due');
@@ -66,7 +67,9 @@ function render(){
     </div>`;
   }
 
-  html += `<div class="card rightCol">
+  html += `</div>`;
+
+  html += `<div class="card sessionsPanel">
     <div class="title">Regressivo das sessões</div>
     ${sortByDate(state.sessions,'start').map(s=>`<div class="task">
       <div style="font-weight:700">${esc(s.name)}</div>
@@ -76,6 +79,7 @@ function render(){
   </div>`;
 
   html += `</div>`;
+
   document.getElementById('tvRoot').innerHTML = html;
 }
 
