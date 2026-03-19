@@ -20,15 +20,15 @@ function render(){
   const cs = state.sessions.find(s=>new Date()>=new Date(s.start)&&new Date()<=new Date(s.end));
 
   let html = `<div class="grid3">
-    <div class="card">
+    <div class="card nowCard">
       <div class="small">Horário atual</div>
       <div class="stat">${new Date().toLocaleTimeString('pt-BR')}</div>
     </div>
-    <div class="card">
+    <div class="card nowCard">
       <div class="small">Sessão atual</div>
       <div class="title">${cs?esc(cs.name):'Sem sessão em andamento'}</div>
     </div>
-    <div class="card">
+    <div class="card nowCard">
       <div class="small">Próxima sessão</div>
       <div class="title">${ns?esc(ns.name):'Sem próxima sessão'}</div>
       ${ns?`<div class="count ${countdown(ns.start,null,'session').cls}">${countdown(ns.start,null,'session').text}</div>`:''}
@@ -43,7 +43,7 @@ function render(){
     const visibleTasks = sortByDate(state.tasks.filter(t=>t.unitId===unit.id && t.status!=='concluida'),'due');
     const nxt = visibleTasks[0];
     const mainLabel = unit.type==='car' ? `Carro ${esc(unit.number)}` : esc(unit.name);
-    const subLabel = unit.type==='car' ? `<div style="color:${esc(unit.pilotColor||'#ffffff')};font-size:13px">${esc(unit.driver||'')}</div>` : '';
+    const subLabel = unit.type==='car' ? `<div class="pilotName" style="color:${esc(unit.pilotColor||'#ffffff')}">${esc(unit.driver||'')}</div>` : '';
 
     html += `<div class="card">
       <div class="headerBlock" style="background:${unit.headerBg||'#18181b'}">
@@ -52,19 +52,18 @@ function render(){
       </div>
 
       <div style="background:#f4f4f5;border-radius:12px;padding:10px">
-        <div class="small">Próxima tarefa da coluna</div>
-        <div style="font-weight:700;font-size:15px">${nxt?esc(nxt.title):'Sem tarefa'}</div>
+        <div class="small">Próxima tarefa</div>
+        <div class="taskTitleBig">${nxt?esc(nxt.title):'Sem tarefa'}</div>
         ${nxt?`<div class="count ${countdown(nxt.due,nxt.status).cls}">${countdown(nxt.due,nxt.status).text}</div>`:'<div class="count gray">SEM TAREFA</div>'}
       </div>
 
       ${visibleTasks.length
-        ? visibleTasks.map(t=>`<div class="task">
-            <div style="font-weight:700;font-size:15px">${esc(t.title)}</div>
-            <div class="small">Responsáveis: ${esc(ownersLabel(membersMap,t.ownerIds||[]))}</div>
-            <div class="small">Sessão: ${esc(sessionName(sessionsMap,t.sessionId))}</div>
+        ? visibleTasks.slice(0,2).map((t, idx)=>`<div class="task">
+            <div class="${idx===0?'taskTitleMid':'compactLabel'}">${esc(t.title)}</div>
+            <div class="hideOnTelao small">Responsáveis: ${esc(ownersLabel(membersMap,t.ownerIds||[]))}</div>
             <div class="count ${countdown(t.due,t.status).cls}" style="margin-top:6px">${countdown(t.due,t.status).text}</div>
           </div>`).join('')
-        : '<div class="task muted">Nenhuma tarefa pendente para esta coluna.</div>'}
+        : '<div class="task"><div class="taskTitleMid" style="color:#6b7280">Nenhuma tarefa pendente</div></div>'}
     </div>`;
   }
 
@@ -72,8 +71,8 @@ function render(){
 
   html += `<div class="card sessionsPanel sessionCard">
     <div class="title">Regressivo das sessões</div>
-    ${sortByDate(state.sessions,'start').map(s=>`<div class="task">
-      <div style="font-weight:700;font-size:15px">${esc(s.name)}</div>
+    ${sortByDate(state.sessions,'start').slice(0,5).map(s=>`<div class="task">
+      <div class="taskTitleMid">${esc(s.name)}</div>
       <div class="small">${new Date(s.start).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})} - ${new Date(s.end).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}</div>
       <div class="count ${countdown(s.start,null,'session').cls}" style="margin-top:6px">${countdown(s.start,null,'session').text}</div>
     </div>`).join('')}
