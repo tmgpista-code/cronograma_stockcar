@@ -35,8 +35,9 @@ function render(){
     </div>
   </div>`;
 
+  const unitsCount = Math.max(state.units.length, 1);
   html += `<div class="tvLayout">`;
-  html += `<div class="tvColumns">`;
+  html += `<div class="tvColumns" style="grid-template-columns:repeat(${unitsCount}, minmax(0, 1fr));">`;
 
   for(const unit of state.units){
     const visibleTasks = sortByDate(state.tasks.filter(t=>t.unitId===unit.id && t.status!=='concluida'),'due');
@@ -79,7 +80,6 @@ function render(){
   </div>`;
 
   html += `</div>`;
-
   document.getElementById('tvRoot').innerHTML = html;
 }
 
