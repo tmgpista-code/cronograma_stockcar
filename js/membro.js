@@ -60,6 +60,19 @@ function renderPanels(){
   const nxt = tasks[0];
   qs('nextTaskBox').textContent = nxt ? nxt.title : 'Nenhuma tarefa encontrada';
 
+  if(nxt){
+    const c = countdown(nxt.due,nxt.status);
+    qs('heroTaskTitle').textContent = nxt.title;
+    qs('heroTaskMeta').textContent = `${unitLabel(unitsMap,nxt.unitId)} • ${ownersLabel(membersMap,nxt.ownerIds||[])}`;
+    qs('heroTaskCountdown').textContent = c.text;
+    qs('heroTaskCountdown').className = `heroCountdown ${c.cls}`;
+  } else {
+    qs('heroTaskTitle').textContent = 'Nenhuma tarefa encontrada';
+    qs('heroTaskMeta').textContent = '';
+    qs('heroTaskCountdown').textContent = 'SEM TAREFA';
+    qs('heroTaskCountdown').className = 'heroCountdown gray';
+  }
+
   qs('memberTasks').innerHTML = tasks.length
     ? tasks.map(t => {
         const c = countdown(t.due,t.status);
