@@ -27,6 +27,10 @@ input,select,textarea{width:100%;padding:12px;border:1px solid var(--border);bor
 .red{color:var(--red)}
 .gray{color:#6b7280}
 .muted{color:var(--muted)}
+.heroTask{margin-bottom:12px;background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%)}
+.heroTitle{font-size:30px;font-weight:800;line-height:1.05;margin-top:4px}
+.heroMeta{font-size:14px;color:#52525b;margin-top:8px}
+.heroCountdown{font-size:34px;font-weight:900;margin-top:10px}
 @media (max-width:700px){
   .wrap{padding:12px}
   h1{font-size:26px}
@@ -34,4 +38,6 @@ input,select,textarea{width:100%;padding:12px;border:1px solid var(--border);bor
   .title{font-size:20px}
   .nextTaskBox{font-size:18px}
   .count{font-size:22px}
+  .heroTitle{font-size:24px}
+  .heroCountdown{font-size:28px}
 }
